@@ -27,5 +27,20 @@ namespace ToDoList.Tests
       // 4. Confirm the description retrieved from the Item object matches the description string provided to the constructor.
       Assert.AreEqual(description, result);
     }
+    [TestMethod]
+    public void SetDescription_SetDescription_String()
+    {
+      //Arrange
+      string description = "Walk the dog.";
+      Item newItem = new Item(description);
+
+      // Act
+      string updatedDescription = "Do the dishes";
+      newItem.Description = updatedDescription;
+      string result = newItem.Description;
+
+      //Assert
+      Assert.AreEqual(updatedDescription, result);
+    }
   }
 }
