@@ -9,15 +9,7 @@ namespace TodoList.Controllers
     [HttpGet("/")]
     public ActionResult Index()
     {
-      ToDoList<Item> allItems = Item.GetAll();
-      return View(allItems);
-    }
-
-    [HttpPost("/items")]
-    public ActionResult Create(string description)
-    {
-      Item myItem = new Item(description);
-      return RedirectToAction("Index");
+      return View();
     }
   }
 }
