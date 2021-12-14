@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetcore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,7 +20,7 @@ namespace ToDoList
 
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddMVC();
+      services.AddMvc();
     }
 
     public void Configure(IApplicationBuilder app)
