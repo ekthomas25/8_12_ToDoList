@@ -30,7 +30,7 @@ namespace ToDoList.Models
         return descriptionEquality;
       }
     }
-    
+
     public static List<Item> GetAll()
     {
       List<Item> allItems = new List<Item> { };
@@ -72,6 +72,11 @@ namespace ToDoList.Models
       // Temporarily returning placeholder item to get beyond compiler errors until we refactor to work with database.
       Item placeholderItem = new Item("placeholder item");
       return placeholderItem;
+    }
+
+    public void Save()
+    {
+      
     }
   }
 }
