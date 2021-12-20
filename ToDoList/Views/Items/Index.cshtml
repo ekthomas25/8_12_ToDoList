@@ -7,10 +7,14 @@
   <p>There are no items in the list.</p>
 }
 <ul>
-  @foreach (Item item in Model) // Loop through each item of type Item in Model. We need the using directive so we can declare that item is of type Item.
+  @foreach (Item item in Model)
   {
-  <li>@Model.Description</li>
+    <li><a href="/items/@item.Id">@item.Description</a></li>
   }
-
 </ul>
-<a href="/items/new">Add a new item!</a> <!-- navigates to a /items/new route where users can create new Items using a form.-->
+
+<a href="/items/new">Add a new item.</a>
+
+<form action="/items/delete" method="post">
+  <button type="submit" name="button">Clear All Items</button>
+</form>
