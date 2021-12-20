@@ -1,26 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
-using ToDoList.Models;
-using System.Collections.Generic;
 
 namespace ToDoList.Controllers
 {
-  public class HomeController : Controller
-  {
-
-    [HttpGet("/")]
-    public ActionResult Index()
+    public class HomeController : Controller
     {
-      return View();
-    }
 
-    [Route("/favorite_photos")]
-    public ActionResult FavoritePhotos()
-    {
-      return View();
+      [HttpGet("/")]
+      public ActionResult Index()
+      {
+        return View();
+      }
+
     }
-  }
 }
-
 // using Microsoft.AspNetCore.Mvc;
 // using ToDoList.Models;
 
