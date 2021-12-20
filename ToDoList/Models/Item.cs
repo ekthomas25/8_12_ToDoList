@@ -7,8 +7,11 @@ namespace ToDoList.Models
   {
     public string Description { get; set; }
     public int Id { get; }
-    private static List<Item> _instances = new List<Item> { };
 
+    public Item(string description)
+    {
+      Description = description;
+    }
     public Item(string description, int id)
     {
       Description = description;
@@ -25,15 +28,15 @@ namespace ToDoList.Models
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
       while (rdr.Read())
       {
-        int itemId = rdr.GetInt32(0);
-        string itemDescription = rdr.GetString(1);
-        Item newItem = new Item(itemDescription, itemId);
-        allItems.Add(newItem);
+          int itemId = rdr.GetInt32(0);
+          string itemDescription = rdr.GetString(1);
+          Item newItem = new Item(itemDescription, itemId);
+          allItems.Add(newItem);
       }
       conn.Close();
       if (conn != null)
       {
-        conn.Dispose();
+          conn.Dispose();
       }
       return allItems;
     }
@@ -42,7 +45,7 @@ namespace ToDoList.Models
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
-      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      var cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"DELETE FROM items;";
       cmd.ExecuteNonQuery();
       conn.Close();
@@ -51,12 +54,11 @@ namespace ToDoList.Models
         conn.Dispose();
       }
     }
-
     public static Item Find(int searchId)
     {
-       // Temporarily returning placeholder item to get beyond compiler errors until we refactor to work with database.
+      // Temporarily returning placeholder item to get beyond compiler errors until we refactor to work with database.
       Item placeholderItem = new Item("placeholder item");
-    return placeholderItem;
+      return placeholderItem;
     }
   }
 }
