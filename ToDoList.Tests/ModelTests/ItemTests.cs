@@ -127,15 +127,18 @@ namespace ToDoList.Tests
       //Assert
       Assert.AreEqual(1, result);
     }
+    */
 
     [TestMethod]
-    public void Find_ReturnsCorrectItem_Item()
+    public void Find_ReturnsCorrectItemFromDatabase_Item()
     {
       //Arrange
       string description01 = "Walk the dog";
       string description02 = "Wash the dishes";
       Item newItem1 = new Item(description01);
+      newItem1.Save();
       Item newItem2 = new Item(description02);
+      newItem2.Save();
 
       //Act
       // Item result = new Item("Incorrect test item");
@@ -144,6 +147,5 @@ namespace ToDoList.Tests
       //Assert
       Assert.AreEqual(newItem2, result);
     }
-    */
   }
 }
