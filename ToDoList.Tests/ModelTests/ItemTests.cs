@@ -18,6 +18,7 @@ namespace ToDoList.Tests
       DBConfiguration.ConnectionString = "server=localhost;user id=root;password=epicodus;port=3306;database=to_do_list_test;";
     }
     
+    /*
     [TestMethod]
     public void ItemConstructor_CreatesInstanceOfItem_Item()
     {
@@ -54,8 +55,10 @@ namespace ToDoList.Tests
       //Assert
       Assert.AreEqual(updatedDescription, result);
     }
+    */
+
     [TestMethod]
-    public void GetAll_ReturnsEmptyList_ItemList()
+    public void GetAll_ReturnsEmptyListFromDatabase_ItemList()
     {
       // Arrange
       List<Item> newList = new List<Item> { };
@@ -64,6 +67,18 @@ namespace ToDoList.Tests
       // Assert
       CollectionAssert.AreEqual(newList, result);
     }
+
+    [TestMethod]
+    public void Equals_ReturnsTrueIfDescriptionsAreTheSame_Item()
+    {
+      //Arrange, Act
+      Item firstItem = new Item("Mow the lawn");
+      Item secondItem = new Item("Mow the lawn");
+
+      // Assert
+      Assert.AreEqual(firstItem, secondItem);
+    }
+    /*
     [TestMethod]
     public void GetAll_ReturnsItems_ItemList()
     {
@@ -111,5 +126,6 @@ namespace ToDoList.Tests
       //Assert
       Assert.AreEqual(newItem2, result);
     }
+    */
   }
 }
