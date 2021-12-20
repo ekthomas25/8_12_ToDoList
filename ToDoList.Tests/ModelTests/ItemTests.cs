@@ -133,19 +133,15 @@ namespace ToDoList.Tests
     public void Find_ReturnsCorrectItemFromDatabase_Item()
     {
       //Arrange
-      string description01 = "Walk the dog";
-      string description02 = "Wash the dishes";
-      Item newItem1 = new Item(description01);
-      newItem1.Save();
-      Item newItem2 = new Item(description02);
+      Item newItem = new Item("Mow the lawn");
+      newItem.Save();
+      Item newItem2 = new Item("Wash dishes");
       newItem2.Save();
 
       //Act
-      // Item result = new Item("Incorrect test item");
-      Item result = Item.Find(2);
-
+      Item foundItem = Item.Find(newItem.Id);
       //Assert
-      Assert.AreEqual(newItem2, result);
+      Assert.AreEqual(newItem, foundItem);
     }
   }
 }
