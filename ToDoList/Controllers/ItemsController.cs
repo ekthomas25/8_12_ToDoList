@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace ToDoList.Controllers
 {
@@ -37,6 +38,20 @@ namespace ToDoList.Controllers
     {
       Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
       return View(thisItem);
+    }
+
+    public ActionResult Edit(int id) //GET action to route a page with a form for updating.
+    {
+      var thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
+      return View(thisItem);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(Item item) //POST action to actually update the item.
+    {
+      _db.Entry(item).State = EntityState.Modified; // We find and update all of the properties of the item we are editing by passing the item (our route parameter) itself into the Entry() method. Then we need to update its State property to EntityState.Modified. This is so Entity knows that the entry has been modified, as it is not explicitly tracking it (we never actually retrieved the item from the database). Once we've marked this specific entry's state as Modified.
+      _db.SaveChanges(); // we can then ask the database to SaveChanges()
+      return RedirectToAction("Index"); // and finally redirect to the Index action.
     }
   }
 }
