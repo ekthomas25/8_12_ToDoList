@@ -1,41 +1,42 @@
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ToDoList.Controllers
 {
   public class ItemsController : Controller
   {
-    [HttpGet("/categories/{categoryId}/items/new")]
-    public ActionResult New(int categoryId)
+    private readonly ToDoListContext _db; // declares a private and readonly field of type ToDoListContext.
+
+    public ItemsController(ToDoListContext db) //  allows us to set the value of our new _db property to our ToDoListContext. This is achievable due to a dependency injection we set up in our AddDbContext method in the ConfigureServices method in our Startup.cs file.
     {
-      Category category = Category.Find(categoryId);
-      return View(category);
+      _db = db;
     }
 
-    // [HttpPost("/items")]
-    // public ActionResult Create(string description)
-    // {
-    //   Item myItem = new Item(description);
-    //   return RedirectToAction("Index");
-    // }
-
-    [HttpPost("/items/delete")]
-    public ActionResult DeleteAll()
+    public ActionResult Index()
     {
-      Item.ClearAll();
+      List<Item> model = _db.Items.ToList(); // Instead of using a verbose GetAll() method with raw SQL, we can instead access all our Items in List form by doing the following: _db.Items.ToList(). LINQ translates the dataset into a list we can use in the view
+      return View(model);
+    }
+
+    public ActionResult Create()
+    {
       return View();
     }
 
-    [HttpGet("/categories/{categoryId}/items/{itemId}")]
-    public ActionResult Show(int categoryId, int itemId)
+    [HttpPost]
+    public ActionResult Create(Item item) // This route will take an item as an argument, add it to the Items DbSet, and then save the changes to our database object. Afterwards, it will redirect users to the Index view.
     {
-      Item item = Item.Find(itemId);
-      Category category = Category.Find(categoryId);
-      Dictionary<string, object> model = new Dictionary<string, object>();
-      model.Add("item", item);
-      model.Add("category", category);
-      return View(model);
+      _db.Items.Add(item);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult Details(int id)
+    {
+      Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
+      return View(thisItem);
     }
   }
 }
