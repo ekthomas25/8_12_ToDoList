@@ -53,5 +53,20 @@ namespace ToDoList.Controllers
       _db.SaveChanges(); // we can then ask the database to SaveChanges()
       return RedirectToAction("Index"); // and finally redirect to the Index action.
     }
+
+    public ActionResult Delete(int id)
+    {
+      var thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
+      return View(thisItem);
+    }
+
+    [HttpPost, ActionName("Delete")] // POST action named DeleteConfirmed instead of Delete because both the GET and POST methods for DElete take id as a parameter. C# wont allow us to have two methods with the same signature. The POST attribute is not considered part of the method signature so the C# compiler will think the actions above are the same method if we name both DELETE.
+    public ActionResult DeleteConfirmed(int id)
+    {
+      var thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
+      _db.Items.Remove(thisItem); //Remove is a built in method.
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }
