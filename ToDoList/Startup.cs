@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
+using ToDoList.Models;
 
 namespace ToDoList
 {
@@ -24,8 +25,8 @@ namespace ToDoList
       services.AddMvc();
 
       services.AddEntityFrameworkMySql()
-          .AddDbContext<ToDoListContext>(options => options
-          .UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServiceProviderServiceExtensions.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
+        .AddDbContext<ToDoListContext>(options => options
+        .UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
     }
 
     public void Configure(IApplicationBuilder app)
@@ -39,7 +40,7 @@ namespace ToDoList
       });
 
       app.UseStaticFiles();
-
+      
       app.Run(async (context) =>
       {
         await context.Response.WriteAsync("Hello World!");
