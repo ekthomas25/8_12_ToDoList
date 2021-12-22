@@ -4,37 +4,12 @@ namespace ToDoList.Models
 {
   public class Category
   {
-    private static List<Category> _instances = new List<Category> {};
+    public Category()
+    {
+      this.Items = new HashSet<Item>(); // HashSet = unordered collection of unique elements. We create a HashSet of Items in the constructor to help avoid exceptions when no records exist in the "many" side of the relationship. Also is more performant than a list. It can't have duplicates.
+    }
+    public int CategoryId { get; set; }
     public string Name { get; set; }
-    public int Id { get; }
-    public List<Item> Items { get; set; }
-
-    public Category(string categoryName)
-    {
-      Name = categoryName;
-      _instances.Add(this);
-      Id = _instances.Count;
-      Items = new List<Item>{};
-    }
-
-    public static void ClearAll()
-    {
-      _instances.Clear();
-    }
-
-    public static List<Category> GetAll()
-    {
-      return _instances;
-    }
-
-    public static Category Find(int searchId)
-    {
-      return _instances[searchId-1];
-    }
-
-    public void AddItem(Item item) // AddItem() will accept an Item object and then use the built-in List Add() method to save that item into the Items property of a specific Category.
-  {
-    Items.Add(item);
-  }
+    public virtual ICollection<Item> Items {get; set; } // public property that will return all Items that belong to a category.
   }
 }
