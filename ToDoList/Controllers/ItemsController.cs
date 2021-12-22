@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace ToDoList.Controllers
 {
@@ -17,12 +18,13 @@ namespace ToDoList.Controllers
 
     public ActionResult Index()
     {
-      List<Item> model = _db.Items.ToList(); // Instead of using a verbose GetAll() method with raw SQL, we can instead access all our Items in List form by doing the following: _db.Items.ToList(). LINQ translates the dataset into a list we can use in the view
+      List<Item> model = _db.Items.Include(item => item.Category).ToList(); // Instead of using a verbose GetAll() method with raw SQL, we can instead access all our Items in List form by doing the following: _db.Items.ToList(). LINQ translates the dataset into a list we can use in the view
       return View(model);
     }
 
     public ActionResult Create()
     {
+      ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
       return View();
     }
 
@@ -43,6 +45,7 @@ namespace ToDoList.Controllers
     public ActionResult Edit(int id) //GET action to route a page with a form for updating.
     {
       var thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
+      ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
       return View(thisItem);
     }
 
