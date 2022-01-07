@@ -8,7 +8,7 @@ namespace ToDoList.Models
     }
     public int ItemId { get; set; }
     public string Description { get; set; }
-    public virtual ICollection<CategoryItem> JoinEntities { get; }
+    public virtual ICollection<CategoryItem> JoinEntities { get; } //Collection Navigation property which will hold the list of relationships this Item is a part of - how we find its related categories.
   }
 }
 
